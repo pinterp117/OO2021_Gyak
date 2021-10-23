@@ -3,30 +3,54 @@
 
 using namespace std;
 
-void printStatus(const string& name1, const int hp1, const int dmg1, const string& name2, const int hp2, const int dmg2) {
-    cout << name1 << " (HP: " << hp1 << " DMG: " << dmg1 <<")  ---  " << name2 <<" (HP: " << hp2 << " DMG: " << dmg2 << ")" << endl;
+struct Warrior {
+    string name;
+    int health_points;
+    int damage;
+};
+
+Warrior readWarrior() {
+    Warrior warrior;
+    cin >> warrior.name >> warrior.health_points >> warrior.damage;
+    return warrior;
 }
 
-void attack(const string& attacker_name, const int attacker_hp, const int attacker_dmg, string& defender_name, int& defender_hp, int& defender_dmg) {
-    printStatus(attacker_name, attacker_hp, attacker_dmg, defender_name, defender_hp, defender_dmg);
-    defender_hp-=attacker_dmg;
-    if (defender_hp<=0) {
-        defender_name += " DEAD";
-        defender_hp = 0;
-        defender_dmg = 0;
+void printWarrior(const Warrior& warrior) {
+    cout << warrior.name << " [HP: " << warrior.health_points << " DMG: " << warrior.damage <<"]";
+}
+
+void printStatus(const Warrior& warrior1, const Warrior& warrior2) {
+    printWarrior(warrior1);
+    cout << " --- ";
+    printWarrior(warrior2);
+    cout << endl;
+}
+
+void attack(const Warrior& attacker, Warrior& defender) {
+    printStatus(attacker, defender);
+    defender.health_points-=attacker.damage;
+    if (defender.health_points <= 0) {
+        defender.name += " DEAD";
+        defender.health_points = 0;
+        defender.damage = 0;
     }
+}
+
+bool isAlive(const Warrior& warrior) {
+    return warrior.health_points > 0;
 }
 
 int main() {
-    int hp1, dmg1, hp2, dmg2;
-    string name1, name2;
-    cin >> name1 >> hp1 >> dmg1 >> name2 >> hp2 >> dmg2;
+    Warrior warrior1, warrior2;
+    warrior1 = readWarrior();
+    warrior2 = readWarrior();
 
-    while (hp1>0 && hp2>0) {
-        attack(name1, hp1, dmg1, name2, hp2, dmg2);
-        if (hp2>0) attack(name2, hp2, dmg2, name1, hp1, dmg1);
+    while (isAlive(warrior1) && isAlive(warrior2)) {
+        attack(warrior1, warrior2);
+        if (isAlive(warrior2)) attack(warrior2, warrior1);
     }
-    printStatus(name1, hp1, dmg1, name2, hp2, dmg2);
+
+    printStatus(warrior1, warrior2);
 
     return 0;
 }
