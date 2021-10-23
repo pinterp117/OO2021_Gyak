@@ -3,20 +3,30 @@
 
 Warrior readWarrior() {
     Warrior warrior;
-    std::cin >> warrior.name >> warrior.health_points >> warrior.damage;
+    std::cin >> warrior.name >> warrior.health_points >> warrior.damage >> warrior.defense;
     return warrior;
 }
 
 void printWarrior(const Warrior& warrior) {
-    std::cout << warrior.name << " [HP: " << warrior.health_points << " DMG: " << warrior.damage <<"]";
+    std::cout << warrior.name << " ["
+    << " HP: " << warrior.health_points 
+    << " DMG: " << warrior.damage 
+    << " DEF: " << warrior.defense
+    << " ]";
+}
+
+void die(Warrior& warrior) {
+    warrior.name += " DEAD";
+    warrior.health_points = 0;
+    warrior.damage = 0;
+    warrior.defense = 0;
 }
 
 void attack(const Warrior& attacker, Warrior& defender) {
-    defender.health_points -= attacker.damage;
-    if (defender.health_points <= 0) {
-        defender.name += " DEAD";
-        defender.health_points = 0;
-        defender.damage = 0;
+    int actual_damage = attacker.damage - defender.defense;
+    if (actual_damage > 0) {
+        defender.health_points -= actual_damage;
+        if (!isAlive(defender)) die(defender);
     }
 }
 

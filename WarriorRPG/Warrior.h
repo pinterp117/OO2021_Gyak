@@ -7,6 +7,7 @@ struct Warrior {
     std::string name;
     int health_points;
     int damage;
+    int defense;
 };
 
 Warrior readWarrior();
