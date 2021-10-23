@@ -1,33 +1,27 @@
 #include <iostream>
+#include <string>
 using namespace std;
+
+void printStatus(string& name1, int hp1, int dmg1, string& name2, int hp2, int dmg2) {
+    cout << name1 << " (HP: " << hp1 << " DMG: " << dmg1 <<")  ---  " << name2 <<" (HP: " << hp2 << " DMG: " << dmg2 << ")" << endl;
+}
+
+void attack(string& attacker_name, int& attacker_hp, int& attacker_dmg, string& defender_name, int& defender_hp, int& defender_dmg) {
+    printStatus(attacker_name, attacker_hp, attacker_dmg, defender_name, defender_hp, defender_dmg);
+    defender_hp-=attacker_dmg;
+    if (defender_hp<0) defender_hp=0;
+}
 
 int main() {
     int hp1, dmg1, hp2, dmg2;
-    cin >> hp1 >> dmg1 >> hp2 >> dmg2;
+    string name1, name2;
+    cin >> name1 >> hp1 >> dmg1 >> name2 >> hp2 >> dmg2;
 
     while (hp1>0 && hp2>0) {
-        cout << "HP: " << hp1 << " DMG: " << dmg1 <<"  --->  HP: " << hp2 << " DMG: " << dmg2 << endl;
-        hp2-=dmg1;
-        if (hp2<0) hp2=0;
-        if (hp2>0) {
-            cout << "HP: " << hp1 << " DMG: " << dmg1 <<"  <---  HP: " << hp2 << " DMG: " << dmg2 << endl;
-            hp1-=dmg2;
-            if (hp1<0) hp1=0;
-        }
+        attack(name1, hp1, dmg1, name2, hp2, dmg2);
+        if (hp2>0) attack(name2, hp2, dmg2, name1, hp1, dmg1);
     }
-    cout << "HP: " << hp1 << " DMG: " << dmg1 <<"  ----  HP: " << hp2 << " DMG: " << dmg2 << endl;
+    printStatus(name1, hp1, dmg1, name2, hp2, dmg2);
 
     return 0;
 }
-
-/*
-HP: 25 DMG: 3  --->  HP: 15 DMG: 8
-HP: 25 DMG: 3  <---  HP: 12 DMG: 8
-HP: 17 DMG: 3  --->  HP: 12 DMG: 8
-HP: 17 DMG: 3  <---  HP: 9 DMG: 8
-HP: 9 DMG: 3  --->  HP: 9 DMG: 8
-HP: 9 DMG: 3  <---  HP: 6 DMG: 8
-HP: 1 DMG: 3  --->  HP: 6 DMG: 8
-HP: 1 DMG: 3  <---  HP: 3 DMG: 8
-HP: 0 DMG: 3  --->  HP: 3 DMG: 8
-*/
