@@ -1,35 +1,33 @@
 #include "Warrior.h"
 #include <iostream>
 
-Warrior readWarrior() {
-    Warrior warrior;
-    std::cin >> warrior.name >> warrior.health_points >> warrior.damage >> warrior.defense;
-    return warrior;
+void Warrior::readFromKeyboard() {
+    std::cin >> name >> health_points >> damage >> defense;
 }
 
-void printWarrior(const Warrior& warrior) {
-    std::cout << warrior.name << " ["
-    << " HP: " << warrior.health_points 
-    << " DMG: " << warrior.damage 
-    << " DEF: " << warrior.defense
+void Warrior::printToTerminal() {
+    std::cout << name << " ["
+    << " HP: " << health_points 
+    << " DMG: " << damage 
+    << " DEF: " << defense
     << " ]";
 }
 
-void die(Warrior& warrior) {
-    warrior.name += " DEAD";
-    warrior.health_points = 0;
-    warrior.damage = 0;
-    warrior.defense = 0;
-}
-
-void attack(const Warrior& attacker, Warrior& defender) {
-    int actual_damage = attacker.damage - defender.defense;
+void Warrior::attack(Warrior& defender) {
+    int actual_damage = damage - defender.defense;
     if (actual_damage > 0) {
         defender.health_points -= actual_damage;
-        if (!isAlive(defender)) die(defender);
+        if (!defender.isAlive()) defender.die();
     }
 }
 
-bool isAlive(const Warrior& warrior) {
-    return warrior.health_points > 0;
+bool Warrior::isAlive() {
+    return health_points > 0;
+}
+
+void Warrior::die() {
+    name += " DEAD";
+    health_points = 0;
+    damage = 0;
+    defense = 0;
 }

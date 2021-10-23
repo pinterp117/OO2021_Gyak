@@ -6,8 +6,8 @@ using namespace std;
 
 int main() {
     Warrior warrior1, warrior2;
-    warrior1 = readWarrior();
-    warrior2 = readWarrior();
+    warrior1.readFromKeyboard();
+    warrior2.readFromKeyboard();
     fightTilDeath(warrior1, warrior2);
     
     return 0;
