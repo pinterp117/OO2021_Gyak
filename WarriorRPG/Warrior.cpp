@@ -5,15 +5,17 @@ void Warrior::readFromKeyboard() {
     std::cin >> name >> health_points >> damage >> defense;
 }
 
-void Warrior::printToTerminal() {
-    std::cout << name << " ["
-    << " HP: " << health_points 
-    << " DMG: " << damage 
-    << " DEF: " << defense
-    << " ]";
+std::string Warrior::toString() const {
+    return  
+    name 
+    + " ["
+    + " HP: " +  std::to_string(health_points) 
+    + " DMG: " + std::to_string(damage)
+    + " DEF: " + std::to_string(defense)
+    + " ]";
 }
 
-void Warrior::attack(Warrior& defender) {
+void Warrior::attack(Warrior& defender) const {
     int actual_damage = damage - defender.defense;
     if (actual_damage > 0) {
         defender.health_points -= actual_damage;
@@ -21,7 +23,7 @@ void Warrior::attack(Warrior& defender) {
     }
 }
 
-bool Warrior::isAlive() {
+bool Warrior::isAlive() const {
     return health_points > 0;
 }
 

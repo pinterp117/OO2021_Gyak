@@ -6,14 +6,15 @@
 class Warrior {
   public:
     void readFromKeyboard();
-    void printToTerminal();
-    void attack(Warrior& defender);
-    bool isAlive();
+    std::string toString() const;
+    void attack(Warrior& defender) const;
+    bool isAlive() const;
   private:  
     std::string name;
     int health_points;
     int damage;
     int defense;
+
     void die();
 };
 
