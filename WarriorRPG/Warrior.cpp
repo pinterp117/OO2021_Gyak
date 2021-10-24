@@ -16,8 +16,7 @@ std::string Warrior::toString() const {
 }
 
 void Warrior::attack(Warrior& defender) const {
-    int actual_damage = damage - defender.defense;
-    if (actual_damage > 0) {
+    if (int actual_damage = damage - defender.defense; actual_damage > 0) {
         defender.health_points -= actual_damage;
         if (!defender.isAlive()) defender.die();
     }
